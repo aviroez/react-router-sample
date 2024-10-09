@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom'
+import Home from './Home'
+import NewPost from './NewPost'
+import PostPage from './PostPage'
+import AboutPage from './AboutPage'
+import MissingPage from './MissingPage'
+import Layout from './Layout'
+import EditPost from './EditPost.js'
+import { useStoreActions } from 'easy-peasy'
+import useAxiosFetch from './hooks/useAxiosFetch.js'
+import { useEffect } from 'react'
 
 function App() {
+  const setPosts = useStoreActions((actions) => actions.setPosts)
+  const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:3500/posts')
+
+  useEffect(() => {
+    setPosts(data)
+  }, [data, setPosts])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Home />} />
+
+          <Route path="post" >
+            <Route index element={<NewPost />} />
+            <Route path=":id" element={<PostPage />} />
+
+            <Route path=":id/edit" element={<EditPost />} />
+          </Route>
+
+          <Route path="about" element={<AboutPage />} />
+
+          <Route path="*" element={<MissingPage />} />
+        </Route>
+      </Routes>
   );
 }
 
