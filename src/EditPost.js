@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useParams, Link, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { format } from 'date-fns';
 import { useStoreState, useStoreActions } from 'easy-peasy'
 

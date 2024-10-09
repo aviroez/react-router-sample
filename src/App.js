@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 
 function App() {
   const setPosts = useStoreActions((actions) => actions.setPosts)
-  const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:3500/posts')
+  const { data } = useAxiosFetch('http://localhost:3500/posts')
 
   useEffect(() => {
     setPosts(data)
